@@ -29,19 +29,25 @@ const p = new Promise(function (resolve, reject) {
     }, 2000);
 });
 
-p.then((data) => {
-    // const p2 = new Promise((resolve, reject) => {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            data.modified = true;
-            resolve(data);
-        }, 2000);
-    });
-    // p2.then(clientData => {
-    //     console.log('Data received', clientData);
-    // });
-}).then(clientData => {
-    console.log('Data received', clientData);
-});
+p
+    .then((data) => {
+        // const p2 = new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                data.modified = true;
+                // resolve(data);
+                reject(data);
+            }, 2000);
+        });
+    })
+    .then(clientData => {
+        console.log('Data received', clientData);
+        clientData.fromPromise = true;
+        return clientData;
+    })
+    .then(data => {
+        console.log('Modified', data);
+    })
+    .catch(err => console.error('Error:', err));
 
 console.log('Scripts is ended');
