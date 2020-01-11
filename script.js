@@ -35,8 +35,8 @@ p
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 data.modified = true;
-                // resolve(data);
-                reject(data);
+                resolve(data);
+                // reject(data); //for getting error and catching that
             }, 2000);
         });
     })
@@ -48,6 +48,7 @@ p
     .then(data => {
         console.log('Modified', data);
     })
-    .catch(err => console.error('Error:', err));
+    .catch(err => console.error('Error:', err))
+    .finally(()=>{console.log('Finally')});
 
 console.log('Scripts is ended');
